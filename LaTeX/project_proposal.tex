@@ -10,42 +10,46 @@
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
+\makeatletter
+\newcommand{\linebreakand}{%
+  \end{@IEEEauthorhalign}
+  \hfill\mbox{}\par
+  \mbox{}\hfill\begin{@IEEEauthorhalign}
+}
+\makeatother
 
 \title{Comparative Study of Voice-Activated vs Controller-Based Manipulation in Pick-and-Place Robotics\\
-{\footnotesize \textsuperscript{*}Note: Sub-titles are not captured in Xplore and
-should not be used}
-\thanks{Identify applicable funding agency here. If none, delete this.}
 }
 
 \author{\IEEEauthorblockN{Neel Girish Bahadarpurkar}
-\IEEEauthorblockA{\textit{MS Robotics} \\
+\IEEEauthorblockA{\textit{MS Robotics Engineering} \\
 \textit{Worcester Polytechnic institute}\\
 Worcester, Massachusetts\\
 nbahadarpurkar@wpi.edu}
 \and
-\IEEEauthorblockN{2\textsuperscript{nd} Given Name Surname}
+\IEEEauthorblockN{Harshal Suresh Bhat}
 \IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-\textit{name of organization (of Aff.)}\\
+\textit{Worcester Polytechnic Institute}\\
 City, Country \\
 email address or ORCID}
 \and
 \IEEEauthorblockN{Brendan Byrne}
-\IEEEauthorblockA{\textit{BS RBE & CS Major} \\
+\IEEEauthorblockA{\textit{BS Robotics Engineering \& Computer Science} \\
 \textit{Worcester Polytechnic Institute}\\
 Marshfield, Massachusetts \\
 bsbyrne@wpi.edu}
-\and
+\linebreakand
 \IEEEauthorblockN{Jack Lynch}
-\IEEEauthorblockA{\textit{MS CS Major} \\
+\IEEEauthorblockA{\textit{MS Computer Science} \\
 \textit{Worcester Polytechnic Institute}\\
 Shrewsbury, Massachusetts \\
 jmlynch@wpi.edu}
 \and
-\IEEEauthorblockN{5\textsuperscript{th} Given Name Surname}
-\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-\textit{name of organization (of Aff.)}\\
-City, Country \\
-email address or ORCID}
+\IEEEauthorblockN{Paul Raynes}
+\IEEEauthorblockA{\textit{MS Robotics Engineering} \\
+\textit{Worcester Polytechnic Institute}\\
+Worcester, Massachusettes \\
+psraynes@wpi.edu}
 }
 
 \maketitle
