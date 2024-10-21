@@ -98,6 +98,7 @@ Our first deliverable 	for this project is a basic unity simulation which will b
 
 As of right now, the movement is a bit buggy, as the block attempts to clip into the platform. This is a result of the MoveTowards function, which moves an object to the position of another object. However, this attempts to move the block to the center of mass of the platform, which causes a ‘clipping’ effect as the block attempts to move inside the platform. While this is merely a stylistic thing, it does have the potential to become an issue down the line if the robots are unable to make it to their destination due to this clipping. The chances of this becoming an issue is slim, but it is still worth mentioning as a possible issue.
 
+The Hugging Face API for speech recognition was used to construct the block's voice control system, which allows for 2D movement with four basic commands: up, down, left, and right. These commands are converted into movements that move the block in two dimensions, providing easy, hands-free control. This approach streamlines interaction by removing the requirement for physical controllers, making it more user-friendly and efficient in certain job contexts. 
 \section{Task Division \& Timeline}
 \subsection{Schedule}
 \begin{table}[htbp]
