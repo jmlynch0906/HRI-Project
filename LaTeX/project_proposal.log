@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.10.20)  20 OCT 2024 22:06
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.10.20)  20 OCT 2024 22:15
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**"c:/Users/psray/Documents/RBE-CS 526/Project/HRI-Project/LaTeX/project_proposal.tex"
+**"c:/Users/psray/Documents/RBE-CS 526/Project/HRI-Project/LaTeX/project_proposal"
 (c:/Users/psray/Documents/RBE-CS 526/Project/HRI-Project/LaTeX/project_proposal.tex
 LaTeX2e <2024-06-01> patch level 2
 L3 programming layer <2024-09-10>
@@ -297,7 +297,12 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 105.
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 
-[2 <./sample_shapes_grid.png> <./sample_sequence.png>] (./project_proposal.bbl)
+[2 <./sample_shapes_grid.png> <./sample_sequence.png>] (./project_proposal.bbl
+Overfull \hbox (29.87758pt too wide) in paragraph at lines 28--30
+\OT1/ptm/m/n/8 https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2016.00183 
+ []
+
+)
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -322,15 +327,15 @@ L3 programming layer <2024-09-10>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 4197 strings out of 473578
- 65462 string characters out of 5732235
- 470271 words of memory out of 5000000
- 27058 multiletter control sequences out of 15000+600000
+ 4201 strings out of 473578
+ 65532 string characters out of 5732235
+ 470283 words of memory out of 5000000
+ 27062 multiletter control sequences out of 15000+600000
  594478 words of font info for 106 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 57i,8n,65p,1122b,266s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 57i,8n,65p,1118b,266s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><c:/texlive/2024/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/texlive/2024/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb><c:/texlive/2024/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/texlive/2024/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on project_proposal.pdf (3 pages, 91805 bytes).
+Output written on project_proposal.pdf (3 pages, 92393 bytes).
 PDF statistics:
  45 PDF objects out of 1000 (max. 8388607)
  25 compressed objects within 1 object stream

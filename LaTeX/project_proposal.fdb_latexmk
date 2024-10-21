@@ -1,15 +1,15 @@
 # Fdb version 4
-["bibtex project_proposal"] 1729476397.71939 "project_proposal.aux" "project_proposal.bbl" "project_proposal" 1729476399.23682 0
-  "./project_proposal.bib" 1729475125 2890 4e242101adc60d4dcdf0bf7166382073 ""
+["bibtex project_proposal"] 1729476904.26024 "project_proposal.aux" "project_proposal.bbl" "project_proposal" 1729476905.71786 0
+  "./project_proposal.bib" 1729476835 3634 681829369c0ef03319a03cfab181e048 ""
   "c:/texlive/2024/texmf-dist/bibtex/bst/ieeetran/IEEEtran.bst" 1729449739 57748 7c8250ecf02814ce6ddc0cdbb63df1dd ""
-  "project_proposal.aux" 1729476398 1449 2f644097c2a098991f213dd5f22508fd "pdflatex"
+  "project_proposal.aux" 1729476905 1677 56c3ad0a24c9ed33b27db4a3c07298db "pdflatex"
   (generated)
   "project_proposal.bbl"
   "project_proposal.blg"
   (rewritten before read)
-["pdflatex"] 1729476397.99515 "c:/Users/psray/Documents/RBE-CS 526/Project/HRI-Project/LaTeX/project_proposal.tex" "project_proposal.pdf" "project_proposal" 1729476399.23727 0
+["pdflatex"] 1729476904.54259 "c:/Users/psray/Documents/RBE-CS 526/Project/HRI-Project/LaTeX/project_proposal.tex" "project_proposal.pdf" "project_proposal" 1729476905.71832 0
   "IEEEtran.cls" 1729462376 281957 5b2e4fa15b0f7eabb840ebf67df4c0f7 ""
-  "c:/Users/psray/Documents/RBE-CS 526/Project/HRI-Project/LaTeX/project_proposal.tex" 1729476172 10974 3778f1475e57f0cefa79ab9da2eefba9 ""
+  "c:/Users/psray/Documents/RBE-CS 526/Project/HRI-Project/LaTeX/project_proposal.tex" 1729476899 11023 4627b6c685ee637a0ef30aa42116c02c ""
   "c:/texlive/2024/texmf-dist/fonts/enc/dvips/base/8r.enc" 1729449167 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "c:/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1729449435 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2024/texmf-dist/fonts/tfm/adobe/times/ptmb7t.tfm" 1729451451 2172 fd0c924230362ff848a33632ed45dc23 ""
@@ -76,9 +76,9 @@
   "c:/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1729451913 5521136 47e49b84c41d5ab3414c7e2d0ef6eb2b ""
   "c:/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1729452098 3326023 dde110b5c59dc80c7f182ceff2477c04 ""
   "c:/texlive/2024/texmf.cnf" 1729451899 713 e69b156964470283e0530f5060668171 ""
-  "project_proposal.aux" 1729476398 1449 2f644097c2a098991f213dd5f22508fd "pdflatex"
-  "project_proposal.bbl" 1729476397 1153 81d81da15b3ce90bcfd6b51e629b4657 "bibtex project_proposal"
-  "project_proposal.tex" 1729476172 10974 3778f1475e57f0cefa79ab9da2eefba9 ""
+  "project_proposal.aux" 1729476905 1677 56c3ad0a24c9ed33b27db4a3c07298db "pdflatex"
+  "project_proposal.bbl" 1729476904 2219 6ca36a5466dae2bf9efd1a851b7988e9 "bibtex project_proposal"
+  "project_proposal.tex" 1729476899 11023 4627b6c685ee637a0ef30aa42116c02c ""
   "sample_sequence.png" 1729472564 5743 f0fc819761714da73d3313dbb229a696 ""
   "sample_shapes_grid.png" 1728938916 11496 eb25388629c33c4c22aac174af7929b1 ""
   (generated)

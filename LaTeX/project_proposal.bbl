@@ -20,7 +20,21 @@
 \providecommand{\BIBdecl}{\relax}
 \BIBdecl
 
-\bibitem{1389777}
-M.~Quigley, M.~Goodrich, and R.~Beard, ``Semi-autonomous human-uav interfaces for fixed-wing mini-uavs,'' in \emph{2004 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) (IEEE Cat. No.04CH37566)}, vol.~3, 2004, pp. 2457--2462 vol.3.
+\bibitem{7139460}
+P.~Bremner and U.~Leonards, ``Efficiency of speech and iconic gesture integration for robotic and human communicators - a direct comparison,'' in \emph{2015 IEEE International Conference on Robotics and Automation (ICRA)}, 2015, pp. 1999--2006.
+
+\bibitem{10.3389/fpsyg.2016.00183}
+\BIBentryALTinterwordspacing
+------, ``Iconic gestures for robot avatars, recognition and integration with speech,'' \emph{Frontiers in Psychology}, vol.~7, 2016. [Online]. Available: \url{https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2016.00183}
+\BIBentrySTDinterwordspacing
+
+\bibitem{8461212}
+V.~Vatsal and G.~Hoffman, ``Design and analysis of a wearable robotic forearm,'' in \emph{2018 IEEE International Conference on Robotics and Automation (ICRA)}, 2018, pp. 5489--5496.
+
+\bibitem{9889423}
+J.~M. Berzuk and J.~E. Young, ``More than words: A framework for describing human-robot dialog designs,'' in \emph{2022 17th ACM/IEEE International Conference on Human-Robot Interaction (HRI)}, 2022, pp. 393--401.
+
+\bibitem{evangelista2017grounding}
+D.~Evangelista, W.~Villa, M.~Imperoli, A.~Vanzo, L.~Iocchi, D.~Nardi, A.~Pretto \emph{et~al.}, ``Grounding natural language instructions in industrial robotics,'' in \emph{Proc. IEEE/RSJ IROS Workshop, Hum.-Robot Interact. Collaborative Manuf. Environ.}, 2017, pp. 1--6.
 
 \end{thebibliography}
