@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\smlx2\\HRI Project\\Assembly-CSharp.csproj",
+      "projectUniqueName": "C:\\Users\\smlx2\\OneDrive\\Documents\\GitHub\\HRI-Project\\HRI Project\\Assembly-CSharp.csproj",
       "projectName": "Assembly-CSharp",
-      "projectPath": "C:\\Users\\smlx2\\HRI Project\\Assembly-CSharp.csproj",
+      "projectPath": "C:\\Users\\smlx2\\OneDrive\\Documents\\GitHub\\HRI-Project\\HRI Project\\Assembly-CSharp.csproj",
       "packagesPath": "C:\\Users\\smlx2\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\smlx2\\HRI Project\\obj\\",
+      "outputPath": "C:\\Users\\smlx2\\OneDrive\\Documents\\GitHub\\HRI-Project\\HRI Project\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\smlx2\\AppData\\Roaming\\NuGet\\NuGet.Config"
