@@ -25,6 +25,7 @@ HRI Project/[Aa]ssets/Plugins/Editor/JetBrains*
 
 # Visual Studio cache directory
 .vs/
+.vsconfig
 HRI Project/.vscode/
 # Gradle cache directory
 .gradle/
