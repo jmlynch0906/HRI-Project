@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Object : MonoBehaviour
+public class ExperimentObject : MonoBehaviour
 {
     private Vector3 pos;
     public string room;
@@ -49,17 +49,39 @@ public class Object : MonoBehaviour
 
     //sets the prefab as the proper object
     void setAttributes(){
-        sphereObject.SetActive(false);   
-        cubeObject.SetActive(false);
-        triangleObject.SetActive(false);
+        if (sphereObject != null)
+            sphereObject.SetActive(false);
+        if (cubeObject != null)
+            cubeObject.SetActive(false);
+        if (triangleObject != null)
+            triangleObject.SetActive(false);
 
         if(shapeobjects.TryGetValue(shape, out GameObject correctShape)){
-            correctShape.SetActive(true);
-            if(colorMaterials.TryGetValue(color, out Material correctMaterial)){
-                correctShape.GetComponent<Renderer>().material = correctMaterial;
+            if (correctShape != null) {
+                correctShape.SetActive(true);
+                if (colorMaterials.TryGetValue(color, out Material correctMaterial))
+                {
+                    correctShape.GetComponent<Renderer>().material = correctMaterial;
+
+                }
             }
+
         }
 
         
+    }
+
+    // Returns True if the provided object matches this one
+    public bool Matches(ExperimentObject obj)
+    {
+        return room.Equals(obj.room) & color.Equals(obj.color) & shape.Equals(obj.shape);
+    }
+
+    // Allows us to programatically initialize an instance ExperimentObjeect
+    public void Init(string room, string color, string shape)
+    {
+        this.room = room;
+        this.color = color;
+        this.shape = shape;
     }
 }
