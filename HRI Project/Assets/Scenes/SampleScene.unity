@@ -2483,7 +2483,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1009874415}
   - component: {fileID: 1009874414}
-  - component: {fileID: 1009874413}
   m_Layer: 0
   m_Name: ExperimentManager
   m_TagString: Untagged
@@ -2491,20 +2490,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1009874413
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1009874412}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d817499d887e3d4aaaf246e756938af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  goal: []
-  current: []
 --- !u!114 &1009874414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2517,6 +2502,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe739b1435bd41f48bc3df580585748d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentSequence: {fileID: 0}
+  completedSequences: []
 --- !u!4 &1009874415
 Transform:
   m_ObjectHideFlags: 0
