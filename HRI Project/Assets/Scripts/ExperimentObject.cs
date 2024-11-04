@@ -28,6 +28,7 @@ public class ExperimentObject : MonoBehaviour
     {
         //for resetting the position
      pos = transform.position;  
+     Debug.Log("position: " + pos);
         //dictionaries must be assigned in Start because inspector references are not avaliable when the dictionaries are first initialized
      shapeobjects = new Dictionary<string, GameObject>{
         {"sphere", sphereObject},
@@ -45,6 +46,7 @@ public class ExperimentObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
     }
 
     //sets the prefab as the proper object
@@ -84,4 +86,13 @@ public class ExperimentObject : MonoBehaviour
         this.color = color;
         this.shape = shape;
     }
+
+    //assigns the attributes of this object to a tile
+    public void AssignToTile(int tilenum){
+        Slot slot = GameObject.Find("Slot"+tilenum).transform.GetComponentInChildren<Slot>();
+        slot.setGoal(color,shape,room);
+
+    }
+
+
 }

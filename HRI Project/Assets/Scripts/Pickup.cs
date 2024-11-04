@@ -10,6 +10,9 @@ public class Pickup : MonoBehaviour
    private Rigidbody objRB;
    [SerializeField] private float pickupRange = 5.0f;
    [SerializeField] private float pickupForce = 150.0f;
+   private Transform originalParent;
+
+   
 
    private void Update(){
     if(Input.GetMouseButtonDown(0)){
@@ -33,6 +36,7 @@ public class Pickup : MonoBehaviour
 
    void GrabObject(GameObject obj){
         if(obj.GetComponent<Rigidbody>()){
+            originalParent = obj.transform.parent;
             objRB = obj.GetComponent<Rigidbody>();
             objRB.useGravity = false;
             objRB.drag = 10;
@@ -47,7 +51,8 @@ public class Pickup : MonoBehaviour
             objRB.useGravity = true;
             objRB.drag = 1;
             objRB.constraints = RigidbodyConstraints.None;
-            objRB.transform.parent = null;
+            objRB.transform.parent = originalParent;
+            originalParent = null;
             heldObject = null;
    }
    void MoveObject(){
