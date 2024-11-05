@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 
 public class ExperimentObject : MonoBehaviour
 {
-    private Vector3 pos;
     public string room;
     public string color;
     public string shape;
@@ -17,6 +17,14 @@ public class ExperimentObject : MonoBehaviour
     public Material red;
     public Material green;
     public Material blue;
+
+    //variables for resetting the position
+    
+    private Vector3 pos;
+    private Quaternion ros;
+    private Rigidbody rb;
+
+    [SerializeField] private Texture image;
 
     
     //binds the strings to the specific objects/meterials
@@ -41,6 +49,8 @@ public class ExperimentObject : MonoBehaviour
         {"green",green}
      };
      setAttributes();
+
+     rb = GetComponentInChildren<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -90,8 +100,19 @@ public class ExperimentObject : MonoBehaviour
     //assigns the attributes of this object to a tile
     public void AssignToTile(int tilenum){
         Slot slot = GameObject.Find("Slot"+tilenum).transform.GetComponentInChildren<Slot>();
-        slot.setGoal(color,shape,room);
+        slot.setGoal(color,shape,room,image);
 
+    }
+
+     public void ResetPosition()
+    {
+        if (rb != null)
+        {
+            rb.transform.position = pos;
+            rb.transform.rotation = ros;
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
     }
 
 

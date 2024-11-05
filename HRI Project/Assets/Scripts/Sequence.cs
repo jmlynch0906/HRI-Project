@@ -5,9 +5,7 @@ using UnityEngine;
 
 public class Sequence : MonoBehaviour
 {
-    // Replace GameObject here with data type for 
     public ExperimentObject[] goal;
-    public ExperimentObject[] current;
 
     //arrays to store each room's objects as well as the slots
     public ExperimentObject[] room0;
@@ -29,7 +27,6 @@ public class Sequence : MonoBehaviour
     {
         // Initialize to empty arrays
         goal = new ExperimentObject[4];
-        current = new ExperimentObject[4];
         List<ExperimentObject> objects = new List<ExperimentObject>();
         Experiment experiment = GameObject.Find("ExperimentManager").transform.GetComponent<Experiment>();
         //initializes arrays with all the gameobjects on the map using the arrays set up in the experiment file.
@@ -82,5 +79,9 @@ public class Sequence : MonoBehaviour
     }
     public void OnCorrectObject(){
         currentScore++;
+    }
+
+    public void onCorrectObjectRemoval(){
+        currentScore--;
     }
 }

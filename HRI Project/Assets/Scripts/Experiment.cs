@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Experiment : MonoBehaviour
@@ -11,10 +12,11 @@ public class Experiment : MonoBehaviour
     public List<Sequence> completedSequences;
 
     
-    private ExperimentObject[] room0;
-    private ExperimentObject[] room1;
-    private ExperimentObject[] room2;
-    private ExperimentObject[] room3;
+    public ExperimentObject[] room0;
+    public ExperimentObject[] room1;
+    public ExperimentObject[] room2;
+    public ExperimentObject[] room3;
+    public ExperimentObject[] allObjects;
 
    
     private Slot[] slots;
@@ -45,6 +47,8 @@ public class Experiment : MonoBehaviour
         Debug.Log("room3 array size: "+ room3.Length);
         slots = slottransform.GetComponentsInChildren<Slot>();
         Debug.Log("slots array size"+ slots.Length);
+        //concat all the arrays together to get all objects for use in the resetPositions method
+        allObjects = room0.Concat(room1).Concat(room2).Concat(room3).ToArray();
 
     }
 
@@ -57,11 +61,13 @@ public class Experiment : MonoBehaviour
     void SequenceCompleteEvent(object sender)
     {
         print("Sequence Complete!");
+        //reset all objects
+        resetObjects();
 
         // Clean up old sequence
         completedSequences.Add(currentSequence);
         currentSequence.sequenceCompleteEvent -= SequenceCompleteEvent;
-
+        
         // Add new seequence
         currentSequence = gameObject.AddComponent<Sequence>();
         currentSequence.sequenceCompleteEvent += SequenceCompleteEvent;
@@ -85,5 +91,12 @@ public class Experiment : MonoBehaviour
     }
     public Slot[] GetSlots(){
         return slots;
+    }
+
+    private void resetObjects(){
+
+        foreach (ExperimentObject obj in allObjects){
+            obj.ResetPosition();
+        }
     }
 }
