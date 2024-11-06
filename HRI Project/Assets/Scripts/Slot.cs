@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Microsoft.Unity.VisualStudio.Editor;
+using System;
 using UnityEngine;
 
 
@@ -19,13 +20,10 @@ public class Slot : MonoBehaviour
     //boolean to prevent the score from incrementing when repeadedly putting a shape into a slot
     private bool correct = false;
 
-//reference to the sequence so the tile can communicate score changes.
-   private Sequence sequence;
+    public event Action<Slot, bool> slotStateEvent;
     //resets the tile with a new goal
 
     private void Start(){
-        sequence = GameObject.Find("ExperimentManager").GetComponent<Sequence>();
-        Debug.Log("sequence: "+ sequence);
         screen = GameObject.Find("Screen_"+slotNum).transform.GetComponentInChildren<Screen>();
     }
     //sets the goal and the image on the screen
@@ -46,9 +44,8 @@ public class Slot : MonoBehaviour
             if(checkCorrectness(obj) && !correct){
                 Debug.Log("Correct Object Placed!");
                 correct = true;
-                sequence.OnCorrectObject();
+                slotStateEvent?.Invoke(this,true);
                 screen.setColor(Color.green);
-
             }
             else{
                 Debug.Log("Wrong Object!");
@@ -63,7 +60,7 @@ public class Slot : MonoBehaviour
        if(correct){
          // Reset the correct flag only for this slot when the correct object exits
             correct = false;
-            sequence.onCorrectObjectRemoval();
+            slotStateEvent?.Invoke(this,false);
             screen.setColor(Color.white);
        }
     

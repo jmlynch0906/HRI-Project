@@ -104,7 +104,7 @@ public class ExperimentObject : MonoBehaviour
 
     }
 
-     public void ResetPosition()
+    public void ResetPosition()
     {
         if (rb != null)
         {
@@ -113,6 +113,12 @@ public class ExperimentObject : MonoBehaviour
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
         }
+    }
+    
+    // Returns this Object as a string in json format
+    public string Serialize()
+    {
+        return $"{{ \"room\": \"{room}\", \"shape\": \"{shape}\", \"color\": \"{color}\" }}";
     }
 
 
