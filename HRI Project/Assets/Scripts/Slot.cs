@@ -52,6 +52,9 @@ public class Slot : MonoBehaviour
             }
 
         }
+        else{
+            Debug.Log("null experiment object");
+        }
     }
 
     private void OnTriggerExit(Collider other)

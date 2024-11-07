@@ -140,7 +140,7 @@ public class Experiment : MonoBehaviour
     private void resetObjects(){
 
         foreach (ExperimentObject obj in allObjects){
-            obj.ResetPosition();
+            obj.SetPosition(null);
         }
     }
 }
