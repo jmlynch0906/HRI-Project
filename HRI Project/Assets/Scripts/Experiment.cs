@@ -93,10 +93,15 @@ public class Experiment : MonoBehaviour
         return slots;
     }
 
+    public ExperimentObject[] GetAllObjects()
+    {
+        return allObjects;
+    }
+
     private void resetObjects(){
 
         foreach (ExperimentObject obj in allObjects){
-            obj.ResetPosition();
+            obj.SetPosition(null);
         }
     }
 }
