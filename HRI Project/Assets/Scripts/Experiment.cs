@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
+using System;
 using UnityEngine;
 
 public class Experiment : MonoBehaviour
 {
     private bool running = false;
-    private float startTime = 0.0f;
-    private float sequenceStartTime = 0.0f;
+    private float experimentStartTime = 0.0f;
     public Sequence currentSequence;
     public List<Sequence> completedSequences;
 
@@ -23,13 +24,7 @@ public class Experiment : MonoBehaviour
     // switched to awake to ensure that a sequence is added before other references to it are called.
     void Awake()
     {
-        if (currentSequence == null)
-        {
-            currentSequence = gameObject.AddComponent<Sequence>();
-        }
-
-        currentSequence.sequenceCompleteEvent += SequenceCompleteEvent; // Subscribe to completion event
-
+        StartExperiment();
         //initializes arrays of objects to be used in the sequences. Since the sequence component has to run it more than once, it is more efficient to just have it ran once.
 
         Transform room0transform = GameObject.Find("Room0_Objects").transform;
@@ -58,6 +53,26 @@ public class Experiment : MonoBehaviour
         
     }
 
+    // Starts the experiment and adds the first sequence
+    public void StartExperiment()
+    {
+        if (!running) // Only run through the start procedure if we haven't already started
+        {
+            if (currentSequence != null)
+            {
+                // There is still a prior sequence here. Unsubscribe from it and clear the previous list
+                currentSequence.sequenceCompleteEvent -= SequenceCompleteEvent;
+                completedSequences.Clear();
+            }
+
+            currentSequence = gameObject.AddComponent<Sequence>();
+            currentSequence.sequenceCompleteEvent += SequenceCompleteEvent; // Subscribe to completion event
+            experimentStartTime = Time.time;
+
+            running = true;
+        }
+    }
+
     void SequenceCompleteEvent(object sender)
     {
         print("Sequence Complete!");
@@ -67,10 +82,39 @@ public class Experiment : MonoBehaviour
         // Clean up old sequence
         completedSequences.Add(currentSequence);
         currentSequence.sequenceCompleteEvent -= SequenceCompleteEvent;
-        
-        // Add new seequence
-        currentSequence = gameObject.AddComponent<Sequence>();
-        currentSequence.sequenceCompleteEvent += SequenceCompleteEvent;
+
+        if (completedSequences.Count() >= 15)
+        {
+            // Complete the experiment after 15 sequences
+            running = false;
+
+            // Write results to an output file
+            string path = Application.dataPath + $"/results_{DateTime.Now.ToString("yy-MM-dd-HH-mm-ss")}.json";
+
+            print(path);
+
+            StreamWriter sw = File.CreateText(path);
+            sw.WriteLine($"{{ \"experimentStartTime\": {experimentStartTime},");
+            sw.WriteLine("\"sequences\": [");
+            for (int i = 0; i < completedSequences.Count(); i++)
+            {
+                Sequence seq = completedSequences[i];
+                string json = seq.Serialize();
+                if (i+1 != completedSequences.Count())
+                {
+                    json += ",";
+                }
+                sw.WriteLine(json);
+            }
+            sw.WriteLine("]}");
+            sw.Close();
+        }
+        else
+        {
+            // Add new seequence
+            currentSequence = gameObject.AddComponent<Sequence>();
+            currentSequence.sequenceCompleteEvent += SequenceCompleteEvent;
+        }
 
     }
 
@@ -96,7 +140,7 @@ public class Experiment : MonoBehaviour
     private void resetObjects(){
 
         foreach (ExperimentObject obj in allObjects){
-            obj.ResetPosition();
+            obj.SetPosition(null);
         }
     }
 }
