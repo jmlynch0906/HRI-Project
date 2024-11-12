@@ -104,15 +104,30 @@ public class ExperimentObject : MonoBehaviour
 
     }
 
-     public void ResetPosition()
+    public void SetPosition(Transform location)
     {
         if (rb != null)
-        {
+        //reset to original position
+        {   if(location == null){
             rb.transform.position = pos;
             rb.transform.rotation = ros;
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
         }
+            else{
+                rb.transform.position = location.position;
+                rb.velocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
+            }
+        }
+    }
+
+    
+    
+    // Returns this Object as a string in json format
+    public string Serialize()
+    {
+        return $"{{ \"room\": \"{room}\", \"shape\": \"{shape}\", \"color\": \"{color}\" }}";
     }
 
 

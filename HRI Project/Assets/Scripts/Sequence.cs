@@ -18,13 +18,16 @@ public class Sequence : MonoBehaviour
 
 
     public event Action<Sequence> sequenceCompleteEvent;
+    public float completionTime = 0;
 
     [SerializeField] private int currentScore = 0;
     private int goalScore = 4;
+    private bool complete;
 
     // Creates a randomized set of objects
     void Start()
     {
+        complete = false;
         // Initialize to empty arrays
         goal = new ExperimentObject[4];
         List<ExperimentObject> objects = new List<ExperimentObject>();
@@ -44,31 +47,25 @@ public class Sequence : MonoBehaviour
             goal[i] = objects[randIndex]; // Add it to the goal
             goal[i].AssignToTile(i+1); //assigns the object to the appropriate tile. adds 1 to i since the tiles start at 1 instead of 0.
             objects.RemoveAt(randIndex); // Remove it from the list
-            
-            
         }
 
-  
+        foreach (Slot slot in slots)
+        {
+            slot.slotStateEvent += onSlotUpdate;
+        }
     }
 
     // Update is called once per frame. Invokes sequenceCompleteEvent if current matches goal
     //changed the scoring system to not rely on checking arrays and constant for loops and instead a single if statement. 
     void Update()
     {
-        if(currentScore >= goalScore){
-        // If we reach this point, that means all objects matched, signal that the sequence is complete
-        sequenceCompleteEvent?.Invoke(this);
+        if(!complete & currentScore >= goalScore){
+            // If we reach this point, that means all objects matched, signal that the sequence is complete
+            complete = true;
+            completionTime = Time.time;
+            sequenceCompleteEvent?.Invoke(this);
         }
     }
-
-    // Adds an object to the current sequence. Returns true if it was correct
-    /*public bool AddObject(GameObject obj, int loc)
-    {
-        current[loc] = obj;
-        ExperimentObject currentObject = current[loc].GetComponent<ExperimentObject>();
-        ExperimentObject goalObject = goal[loc].GetComponent<ExperimentObject>();
-        return currentObject != null & currentObject.Matches(goalObject);
-    }*/
 
     private void setArrays(ExperimentObject[] r0, ExperimentObject[] r1, ExperimentObject[] r2, ExperimentObject[] r3, Slot[] s){
         room0 = r0;
@@ -77,11 +74,36 @@ public class Sequence : MonoBehaviour
         room3 = r3;
         slots = s;
     }
-    public void OnCorrectObject(){
-        currentScore++;
+
+    private void onSlotUpdate(object sender, bool correct)
+    {
+        if (correct)
+        {
+            currentScore++;
+        }
+        else
+        {
+            currentScore--;
+        }
     }
 
-    public void onCorrectObjectRemoval(){
-        currentScore--;
+    // Returns this Sequence as a string in json format
+    public string Serialize()
+    {
+        string json = "{ \"sequence\":[\n";
+
+        for(int i = 0; i < goal.Length; i++)
+        {
+            json += goal[i].Serialize();
+            if (i+1 != goal.Length)
+            {
+                json += ",";
+            }
+            json += "\n";
+        }
+
+        json += $"],\n \"completionTime\": {completionTime} }}";
+
+        return json;
     }
 }
