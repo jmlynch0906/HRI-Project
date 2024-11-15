@@ -73,7 +73,7 @@ public class UISelection : MonoBehaviour
 
 
 
-private void OnVoiceControlToggled(bool toggleValue)
+    private void OnVoiceControlToggled(bool toggleValue)
     {
         voiceControlsPanel.SetActive(toggleValue);
         manualControlsPanel.SetActive(!toggleValue);
@@ -364,7 +364,7 @@ private void OnVoiceControlToggled(bool toggleValue)
     //    SetRobotInAction();
     //}
 
-#endregion
+    #endregion
 
     #region Manual Controls Panel Part
 
