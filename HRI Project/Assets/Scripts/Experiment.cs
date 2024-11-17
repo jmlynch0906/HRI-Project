@@ -83,10 +83,13 @@ public class Experiment : MonoBehaviour
         completedSequences.Add(currentSequence);
         currentSequence.sequenceCompleteEvent -= SequenceCompleteEvent;
 
-        if (completedSequences.Count() >= 15)
+        if (completedSequences.Count() >= 1)
         {
             // Complete the experiment after 15 sequences
             running = false;
+
+            // Get whether voice or manual controls were used
+            bool voiceControlEnabled = GameObject.Find("Canvas").GetComponent<UISelection>().IsVoiceControlEnabled();
 
             // Write results to an output file
             string path = Application.dataPath + $"/results_{DateTime.Now.ToString("yy-MM-dd-HH-mm-ss")}.json";
@@ -95,6 +98,7 @@ public class Experiment : MonoBehaviour
 
             StreamWriter sw = File.CreateText(path);
             sw.WriteLine($"{{ \"experimentStartTime\": {experimentStartTime},");
+            sw.WriteLine($"\"voiceControlEnabled\": {voiceControlEnabled},");
             sw.WriteLine("\"sequences\": [");
             for (int i = 0; i < completedSequences.Count(); i++)
             {

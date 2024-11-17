@@ -354,22 +354,12 @@ public class UISelection : MonoBehaviour
             return memoryStream.ToArray();
         }
     }
-    //private void StartRecording()
-    //{
 
-    //}
+    public bool IsVoiceControlEnabled()
+    {
+        return voiceControlToggle.isOn;
+    }
 
-    //private void StopRecording()
-    //{
-    //    string voiceStr = "Robot 1, Object 1, slot";
-
-    //    //Set Values Here
-    //    m_CurrentRobotIndex = 0;
-    //    m_CurrentSlotIndex = 0;
-    //    m_CurrentObjectIndex = 0;
-
-    //    SetRobotInAction();
-    //}
 
     #endregion
 
