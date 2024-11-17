@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using Microsoft.Unity.VisualStudio.Editor;
+//using Microsoft.Unity.VisualStudio.Editor;
 using System;
 using UnityEngine;
 
@@ -33,6 +33,10 @@ public class Slot : MonoBehaviour
         desiredshape = shape;
         desiredroom = room;
         //sets the image that'll appear on the screen. also sets the background color to white in case it isnt already
+        if (!screen)
+        {
+            screen = GameObject.Find("Screen_" + slotNum).transform.GetComponentInChildren<Screen>();
+        }
         screen.setImage(image);
         screen.setColor(Color.white);
     }
