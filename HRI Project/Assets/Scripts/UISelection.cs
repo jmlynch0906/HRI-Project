@@ -164,8 +164,9 @@ public class UISelection : MonoBehaviour
         int maxRetries = 5;
         int currentTry = 0;
         bool success = false;
+        int loopBreaker = 20;
 
-        while (!success && currentTry < maxRetries)
+        while (!success && currentTry < maxRetries && loopBreaker > 0)
         {
             currentTry++;
             if (currentTry > 1)
@@ -213,7 +214,13 @@ public class UISelection : MonoBehaviour
                 }
             }
 
+            loopBreaker--;
             yield return new WaitForSeconds(2f); // Wait for response
+        }
+
+        if(loopBreaker <= 0)
+        {
+            Debug.LogError("Possible Infinite While Loop in UI Selection While Parsing Voice Command");
         }
     }
 
