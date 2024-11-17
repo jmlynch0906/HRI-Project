@@ -64,7 +64,14 @@ public class FirstPersonControls : MonoBehaviour
         {
             if (!m_CanRotate)
             {
+                // Unlock the cursor and return
+                Cursor.lockState = CursorLockMode.Confined;
                 return;
+            }
+            else
+            {
+                // Lock and hide the cursor
+                Cursor.lockState = CursorLockMode.Locked;
             }
 
             float mouseX = Input.GetAxis("Mouse X");
