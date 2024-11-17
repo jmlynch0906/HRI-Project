@@ -25,17 +25,8 @@ public class FirstPersonControls : MonoBehaviour
         //movement
         float horizontalMovement = Input.GetAxis("Horizontal");
         float verticalMovement = Input.GetAxis("Vertical");
-        Vector3 moveDirection;
-        if (horizontalMovement != 0 || verticalMovement != 0)
-        {
-            moveDirection = transform.forward * verticalMovement + transform.right * horizontalMovement;
-            moveDirection.Normalize(); // Ensure no diagonal speed boost
-        }
-        else
-        {
-            // Stop moving instantly when no input is detected
-            moveDirection = Vector3.zero;
-        }
+        Vector3 moveDirection = transform.forward * verticalMovement + transform.right * horizontalMovement;
+
         characterController.Move(moveDirection*WalkSpeed*Time.deltaTime);
 
         if(!IsGrounded()){
@@ -59,7 +50,7 @@ public class FirstPersonControls : MonoBehaviour
 
     }
 
-    bool  IsGrounded(){
+    bool IsGrounded(){
         RaycastHit hit;
         if(Physics.Raycast(transform.position,Vector3.down,out hit,GroundCheckDistance)){
             return true;
