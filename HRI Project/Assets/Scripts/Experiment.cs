@@ -83,7 +83,7 @@ public class Experiment : MonoBehaviour
         completedSequences.Add(currentSequence);
         currentSequence.sequenceCompleteEvent -= SequenceCompleteEvent;
 
-        if (completedSequences.Count() >= 1)
+        if (completedSequences.Count() >= 5)
         {
             // Complete the experiment after 15 sequences
             running = false;
