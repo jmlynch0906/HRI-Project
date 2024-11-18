@@ -249,7 +249,19 @@ public class UISelection : MonoBehaviour
                         }
                         else
                         {
-                            print("Failed to parse int from part: " + parts[i + 1]);
+                            print("Failed to parse int from part: " + parts[i + 1] + " Checking for written numbers");
+                            if (parts[i + 1].ToLower().Contains("one") | parts[i + 1].ToLower().Contains("won"))
+                            {
+                                m_CurrentRobotIndex = 0;
+                            }
+                            else if (parts[i + 1].ToLower().Contains("two") | parts[i + 1].ToLower().Contains("to"))
+                            {
+                                m_CurrentRobotIndex = 1;
+                            }
+                            else if (parts[i + 1].ToLower().Contains("three"))
+                            {
+                                m_CurrentRobotIndex = 2;
+                            }
                         }
                     }
                 }
@@ -289,7 +301,24 @@ public class UISelection : MonoBehaviour
                         }
                         else
                         {
-                            print("Failed to parse int from part: " + parts[i + 1]);
+                            print("Failed to parse int from part: " + parts[i + 1] + " Checking for written numbers");
+
+                            if (parts[i + 1].ToLower().Contains("one") | parts[i + 1].ToLower().Contains("won"))
+                            {
+                                m_CurrentRobotIndex = 0;
+                            }
+                            else if (parts[i + 1].ToLower().Contains("two") | parts[i + 1].ToLower().Contains("to"))
+                            {
+                                m_CurrentRobotIndex = 1;
+                            }
+                            else if (parts[i + 1].ToLower().Contains("three"))
+                            {
+                                m_CurrentRobotIndex = 2;
+                            }
+                            else if (parts[i + 1].ToLower().Contains("four") | parts[i + 1].ToLower().Contains("for"))
+                            {
+                                m_CurrentRobotIndex = 3;
+                            }
                         }
                     }
                 }
