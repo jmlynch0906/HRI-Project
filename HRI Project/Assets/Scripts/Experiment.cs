@@ -60,6 +60,9 @@ public class Experiment : MonoBehaviour
     {
         if (!running) // Only run through the start procedure if we haven't already started
         {
+            voiceControlEnabled = false;
+            GameObject.Find("Canvas").GetComponent<UISelection>().OnVoiceControlToggled(voiceControlEnabled);
+
             if (currentSequence != null)
             {
                 // There is still a prior sequence here. Unsubscribe from it and clear the previous list
