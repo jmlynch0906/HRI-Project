@@ -37,12 +37,8 @@ public class FirstPersonControls : MonoBehaviour
         float horizontalMovement = Input.GetAxis("Horizontal");
         float verticalMovement = Input.GetAxis("Vertical");
         Vector3 moveDirection = transform.forward * verticalMovement + transform.right * horizontalMovement;
-        moveDirection.Normalize();
-        if (horizontalMovement == 0 && verticalMovement == 0 && IsGrounded())
-        {
-            velocity = Vector3.zero;
-        }
-        characterController.Move(moveDirection * WalkSpeed * Time.deltaTime);
+
+        characterController.Move(moveDirection*WalkSpeed*Time.deltaTime);
 
         if (!IsGrounded())
         {
@@ -68,7 +64,14 @@ public class FirstPersonControls : MonoBehaviour
         {
             if (!m_CanRotate)
             {
+                // Unlock the cursor and return
+                Cursor.lockState = CursorLockMode.Confined;
                 return;
+            }
+            else
+            {
+                // Lock and hide the cursor
+                Cursor.lockState = CursorLockMode.Locked;
             }
 
             float mouseX = Input.GetAxis("Mouse X");
@@ -80,7 +83,7 @@ public class FirstPersonControls : MonoBehaviour
         }
     }
 
-    bool  IsGrounded(){
+    bool IsGrounded(){
         RaycastHit hit;
         if(Physics.Raycast(transform.position,Vector3.down,out hit,GroundCheckDistance)){
             return true;

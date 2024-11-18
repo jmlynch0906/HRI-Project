@@ -6,11 +6,10 @@ using System;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 public class UISelection : MonoBehaviour
 {
-    [SerializeField] private Toggle voiceControlToggle;
-
     [Space(8)]
     [SerializeField] private GameObject manualControlsPanel;
     [SerializeField] private GameObject voiceControlsPanel;
@@ -29,6 +28,10 @@ public class UISelection : MonoBehaviour
     [SerializeField] private RobotMovement[] robots;
     [SerializeField] private Transform[] slotTransforms;
 
+    [Space(8)]
+    [SerializeField] private Button resetBtn;
+    [SerializeField] private Experiment experimentToReset;
+
     private int m_CurrentRobotIndex = 0;
     private int m_CurrentSlotIndex = 0;
     private int m_CurrentObjectIndex = 0;
@@ -42,8 +45,6 @@ public class UISelection : MonoBehaviour
 
     private void OnEnable()
     {
-        voiceControlToggle.onValueChanged.AddListener(OnVoiceControlToggled);
-
         robotSelectionDropdown.onValueChanged.AddListener(OnRobotSelectionChanged);
         slotSelectionDropdown.onValueChanged.AddListener(OnSlotSelectionChanged);
         objectSelectionDropdown.onValueChanged.AddListener(OnObjectSelectionChanged);
@@ -56,12 +57,11 @@ public class UISelection : MonoBehaviour
     private void Start()
     {
         OnVoiceControlToggled(false);
+        resetBtn.onClick.AddListener(experimentToReset.resetObjects);
     }
 
     private void OnDisable()
     {
-        voiceControlToggle.onValueChanged.RemoveListener(OnVoiceControlToggled);
-
         robotSelectionDropdown.onValueChanged.RemoveListener(OnRobotSelectionChanged);
         slotSelectionDropdown.onValueChanged.RemoveListener(OnSlotSelectionChanged);
         objectSelectionDropdown.onValueChanged.RemoveListener(OnObjectSelectionChanged);
@@ -73,7 +73,7 @@ public class UISelection : MonoBehaviour
 
 
 
-    private void OnVoiceControlToggled(bool toggleValue)
+    public void OnVoiceControlToggled(bool toggleValue)
     {
         voiceControlsPanel.SetActive(toggleValue);
         manualControlsPanel.SetActive(!toggleValue);
@@ -82,9 +82,7 @@ public class UISelection : MonoBehaviour
     private void SetRobotInAction()
     {
         RobotMovement robotScript = robots[m_CurrentRobotIndex];
-        robotScript.SetSlotDestinationTransform(slotTransforms[m_CurrentSlotIndex]);
-        robotScript.SetShapeDestinationTransform(m_CurrentObjectIndex);
-        robotScript.EnableMovement(true);
+        robotScript.SetTask(m_CurrentObjectIndex, slotTransforms[m_CurrentSlotIndex]);
     }
 
     #region Voice Controls Panel Part
@@ -94,6 +92,7 @@ public class UISelection : MonoBehaviour
         {
             voiceStatusText.text = "Recording...";
         }
+        print("start recording");
         startRecordingBtn.interactable = false;
         stopRecordingBtn.interactable = true;
 
@@ -103,6 +102,7 @@ public class UISelection : MonoBehaviour
 
     private void StopRecording()
     {
+        print("stop recording");
         try
         {
             if (voiceStatusText != null)
@@ -194,9 +194,6 @@ public class UISelection : MonoBehaviour
                             startRecordingBtn.interactable = true;
                             if (voiceStatusText != null)
                                 voiceStatusText.text = "Service unavailable. Please try manual control.";
-
-                            // Automatically switch to manual mode
-                            voiceControlToggle.isOn = false;
                         }
                     });
             }
@@ -208,9 +205,6 @@ public class UISelection : MonoBehaviour
                     startRecordingBtn.interactable = true;
                     if (voiceStatusText != null)
                         voiceStatusText.text = "Error processing voice. Please try manual control.";
-
-                    // Automatically switch to manual mode
-                    voiceControlToggle.isOn = false;
                 }
             }
 
@@ -242,9 +236,25 @@ public class UISelection : MonoBehaviour
                 {
                     if (parts[i] == "robot" && i + 1 < parts.Length)
                     {
-                        if (int.TryParse(parts[i + 1], out int robotIndex))
+                        if (int.TryParse(Regex.Replace(parts[i + 1], @"[^\d]+", ""), out int robotIndex))
                         {
                             m_CurrentRobotIndex = robotIndex - 1; // Convert to 0-based index
+                        }
+                        else
+                        {
+                            print("Failed to parse int from part: " + parts[i + 1] + " Checking for written numbers");
+                            if (parts[i + 1].ToLower().Contains("one") | parts[i + 1].ToLower().Contains("won"))
+                            {
+                                m_CurrentRobotIndex = 0;
+                            }
+                            else if (parts[i + 1].ToLower().Contains("two") | parts[i + 1].ToLower().Contains("to"))
+                            {
+                                m_CurrentRobotIndex = 1;
+                            }
+                            else if (parts[i + 1].ToLower().Contains("three"))
+                            {
+                                m_CurrentRobotIndex = 2;
+                            }
                         }
                     }
                 }
@@ -278,9 +288,30 @@ public class UISelection : MonoBehaviour
                 {
                     if (parts[i] == "slot" && i + 1 < parts.Length)
                     {
-                        if (int.TryParse(parts[i + 1], out int slotIndex))
+                        if (int.TryParse(Regex.Replace(parts[i + 1], @"[^\d]+", ""), out int slotIndex))
                         {
                             m_CurrentSlotIndex = slotIndex - 1; // Convert to 0-based index
+                        }
+                        else
+                        {
+                            print("Failed to parse int from part: " + parts[i + 1] + " Checking for written numbers");
+
+                            if (parts[i + 1].ToLower().Contains("one") | parts[i + 1].ToLower().Contains("won"))
+                            {
+                                m_CurrentRobotIndex = 0;
+                            }
+                            else if (parts[i + 1].ToLower().Contains("two") | parts[i + 1].ToLower().Contains("to"))
+                            {
+                                m_CurrentRobotIndex = 1;
+                            }
+                            else if (parts[i + 1].ToLower().Contains("three"))
+                            {
+                                m_CurrentRobotIndex = 2;
+                            }
+                            else if (parts[i + 1].ToLower().Contains("four") | parts[i + 1].ToLower().Contains("for"))
+                            {
+                                m_CurrentRobotIndex = 3;
+                            }
                         }
                     }
                 }
@@ -354,22 +385,8 @@ public class UISelection : MonoBehaviour
             return memoryStream.ToArray();
         }
     }
-    //private void StartRecording()
-    //{
 
-    //}
 
-    //private void StopRecording()
-    //{
-    //    string voiceStr = "Robot 1, Object 1, slot";
-
-    //    //Set Values Here
-    //    m_CurrentRobotIndex = 0;
-    //    m_CurrentSlotIndex = 0;
-    //    m_CurrentObjectIndex = 0;
-
-    //    SetRobotInAction();
-    //}
 
     #endregion
 

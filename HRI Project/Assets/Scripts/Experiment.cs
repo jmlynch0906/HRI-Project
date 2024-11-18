@@ -12,6 +12,8 @@ public class Experiment : MonoBehaviour
     public Sequence currentSequence;
     public List<Sequence> completedSequences;
 
+    private bool voiceControlEnabled = false;
+
 
     public ExperimentObject[] room0;
     public ExperimentObject[] room1;
@@ -83,7 +85,7 @@ public class Experiment : MonoBehaviour
         completedSequences.Add(currentSequence);
         currentSequence.sequenceCompleteEvent -= SequenceCompleteEvent;
 
-        if (completedSequences.Count() >= 15)
+        if (completedSequences.Count() >= 5)
         {
             // Complete the experiment after 15 sequences
             running = false;
@@ -95,6 +97,7 @@ public class Experiment : MonoBehaviour
 
             StreamWriter sw = File.CreateText(path);
             sw.WriteLine($"{{ \"experimentStartTime\": {experimentStartTime},");
+            sw.WriteLine($"\"voiceControlEnabled\": {voiceControlEnabled},");
             sw.WriteLine("\"sequences\": [");
             for (int i = 0; i < completedSequences.Count(); i++)
             {
@@ -108,6 +111,13 @@ public class Experiment : MonoBehaviour
             }
             sw.WriteLine("]}");
             sw.Close();
+
+            // Switch control type, reset sequences
+            voiceControlEnabled = !voiceControlEnabled;
+            GameObject.Find("Canvas").GetComponent<UISelection>().OnVoiceControlToggled(voiceControlEnabled);
+            completedSequences.Clear();
+            currentSequence = gameObject.AddComponent<Sequence>();
+            currentSequence.sequenceCompleteEvent += SequenceCompleteEvent;
         }
         else
         {
@@ -145,7 +155,7 @@ public class Experiment : MonoBehaviour
         return allObjects;
     }
 
-    private void resetObjects()
+    public void resetObjects()
     {
 
         foreach (ExperimentObject obj in allObjects)
