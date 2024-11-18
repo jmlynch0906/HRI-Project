@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+
 //using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 
@@ -17,6 +19,8 @@ public class ExperimentObject : MonoBehaviour
     public Material red;
     public Material green;
     public Material blue;
+
+   private TextMeshPro text;
 
     //variables for resetting the position
     
@@ -51,6 +55,8 @@ public class ExperimentObject : MonoBehaviour
      setAttributes();
 
      rb = GetComponentInChildren<Rigidbody>();
+     text = GetComponentInChildren<TextMeshPro>();
+     text.text = room;
     }
 
     // Update is called once per frame

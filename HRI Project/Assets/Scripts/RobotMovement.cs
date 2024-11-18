@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -25,6 +26,9 @@ public class RobotMovement : MonoBehaviour
 
     [SerializeField] private ExperimentObject[] roomObjects;
 
+    [SerializeField] private String robotNum;
+
+
     //return point
     private Vector3 originalPosition;
     
@@ -34,6 +38,8 @@ public class RobotMovement : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         agent.SetDestination(originalPosition);
         taskComplete = true;
+        TextMeshPro text = GetComponentInChildren<TextMeshPro>();
+        text.text = robotNum;
     }
 
     // Update is called once per frame
