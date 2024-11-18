@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 public class UISelection : MonoBehaviour
 {
@@ -238,9 +239,25 @@ public class UISelection : MonoBehaviour
                 {
                     if (parts[i] == "robot" && i + 1 < parts.Length)
                     {
-                        if (int.TryParse(parts[i + 1], out int robotIndex))
+                        if (int.TryParse(Regex.Replace(parts[i + 1], @"[^\d]+", ""), out int robotIndex))
                         {
                             m_CurrentRobotIndex = robotIndex - 1; // Convert to 0-based index
+                        }
+                        else
+                        {
+                            print("Failed to parse int from part: " + parts[i + 1] + " Checking for written numbers");
+                            if (parts[i + 1].ToLower().Contains("one") | parts[i + 1].ToLower().Contains("won"))
+                            {
+                                m_CurrentRobotIndex = 0;
+                            }
+                            else if (parts[i + 1].ToLower().Contains("two") | parts[i + 1].ToLower().Contains("to"))
+                            {
+                                m_CurrentRobotIndex = 1;
+                            }
+                            else if (parts[i + 1].ToLower().Contains("three"))
+                            {
+                                m_CurrentRobotIndex = 2;
+                            }
                         }
                     }
                 }
@@ -274,9 +291,30 @@ public class UISelection : MonoBehaviour
                 {
                     if (parts[i] == "slot" && i + 1 < parts.Length)
                     {
-                        if (int.TryParse(parts[i + 1], out int slotIndex))
+                        if (int.TryParse(Regex.Replace(parts[i + 1], @"[^\d]+", ""), out int slotIndex))
                         {
                             m_CurrentSlotIndex = slotIndex - 1; // Convert to 0-based index
+                        }
+                        else
+                        {
+                            print("Failed to parse int from part: " + parts[i + 1] + " Checking for written numbers");
+
+                            if (parts[i + 1].ToLower().Contains("one") | parts[i + 1].ToLower().Contains("won"))
+                            {
+                                m_CurrentRobotIndex = 0;
+                            }
+                            else if (parts[i + 1].ToLower().Contains("two") | parts[i + 1].ToLower().Contains("to"))
+                            {
+                                m_CurrentRobotIndex = 1;
+                            }
+                            else if (parts[i + 1].ToLower().Contains("three"))
+                            {
+                                m_CurrentRobotIndex = 2;
+                            }
+                            else if (parts[i + 1].ToLower().Contains("four") | parts[i + 1].ToLower().Contains("for"))
+                            {
+                                m_CurrentRobotIndex = 3;
+                            }
                         }
                     }
                 }
