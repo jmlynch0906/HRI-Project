@@ -1057,9 +1057,9 @@ MonoBehaviour:
   m_text: "Instructions: Complete the sequences of shapes as fast as you can by picking
     up a shape and putting it in the proper slot. The number on the shape indicates
     the room number. Room 0 is your room. Use the robots to get objects from the
-    other rooms.\n Round 1: Use the selection menu provided, and select a robot,
-    shape, color, and slot location.  \nRound 2: Use voice commands to request a
-    robot, shape, and color, and slot location. "
+    other rooms.\nRound 1: Use the selection menu provided, and select a robot, shape,
+    color, and slot location.  \nRound 2: Use voice commands to request a robot,
+    shape, and color, and slot location. "
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

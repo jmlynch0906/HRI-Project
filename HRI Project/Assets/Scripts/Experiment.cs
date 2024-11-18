@@ -4,6 +4,7 @@ using System.Linq;
 using System.IO;
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Experiment : MonoBehaviour
 {
@@ -21,12 +22,15 @@ public class Experiment : MonoBehaviour
     public ExperimentObject[] room3;
     public ExperimentObject[] allObjects;
 
+    [SerializeField] private Button startManual;
+    [SerializeField] private Button startVoice;
+    [SerializeField] private GameObject testCompletePopup;
+
 
     private Slot[] slots;
     // switched to awake to ensure that a sequence is added before other references to it are called.
     void Awake()
     {
-        StartExperiment();
         //initializes arrays of objects to be used in the sequences. Since the sequence component has to run it more than once, it is more efficient to just have it ran once.
 
         Transform room0transform = GameObject.Find("Room0_Objects").transform;
@@ -47,6 +51,13 @@ public class Experiment : MonoBehaviour
         //concat all the arrays together to get all objects for use in the resetPositions method
         allObjects = room0.Concat(room1).Concat(room2).Concat(room3).ToArray();
 
+
+        startManual.transform.parent.parent.gameObject.SetActive(true);
+        startManual.onClick.AddListener(StartExperiment);
+        startVoice.onClick.AddListener(StartExperiment);
+
+        voiceControlEnabled = false;
+        GameObject.Find("Canvas").GetComponent<UISelection>().OnVoiceControlToggled(voiceControlEnabled);
     }
 
     // Update is called once per frame
@@ -60,8 +71,8 @@ public class Experiment : MonoBehaviour
     {
         if (!running) // Only run through the start procedure if we haven't already started
         {
-            voiceControlEnabled = false;
-            GameObject.Find("Canvas").GetComponent<UISelection>().OnVoiceControlToggled(voiceControlEnabled);
+            startManual.transform.parent.parent.gameObject.SetActive(false);
+            startVoice.transform.parent.parent.gameObject.SetActive(false);
 
             if (currentSequence != null)
             {
@@ -121,6 +132,15 @@ public class Experiment : MonoBehaviour
             completedSequences.Clear();
             currentSequence = gameObject.AddComponent<Sequence>();
             currentSequence.sequenceCompleteEvent += SequenceCompleteEvent;
+
+            if (voiceControlEnabled)
+            {
+                startVoice.transform.parent.parent.gameObject.SetActive(true);
+            }
+            else
+            {
+                testCompletePopup.SetActive(true);
+            }
         }
         else
         {
