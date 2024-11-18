@@ -19,30 +19,26 @@ public class RobotMovement : MonoBehaviour
     private Rigidbody objRB;
 
     [SerializeField] private bool pickedupShape = false;
-    [SerializeField] private bool taskComplete = false;
+    [SerializeField] private bool taskComplete = true;
 
-    [SerializeField] private bool destinationSet = false;
+    [SerializeField] private bool shapeDestinationSet = false;
 
     [SerializeField] private ExperimentObject[] roomObjects;
 
     //return point
     private Vector3 originalPosition;
-    private bool m_CanMove = false;
     
     void Start()
     {
-         originalPosition = transform.position;
-         agent = GetComponent<NavMeshAgent>(); 
+        originalPosition = transform.position;
+        agent = GetComponent<NavMeshAgent>();
+        agent.SetDestination(originalPosition);
+        taskComplete = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!m_CanMove)
-        {
-            return;
-        }
-
         //robot returns home
         if(taskComplete){
             agent.SetDestination(originalPosition);
@@ -51,18 +47,18 @@ public class RobotMovement : MonoBehaviour
             //robot moves to the slot
             if(pickedupShape){
                 MoveObject();
-                if(!destinationSet){
+                if(!shapeDestinationSet){
                     agent.SetDestination(slotDestination.position);
-                    destinationSet = true;
+                    shapeDestinationSet = true;
                 }
                 checkDistanceToSlot();
             }
             //robot picks up the shape
             else{
-                if(!destinationSet){
+                if(!shapeDestinationSet){
                     agent.SetDestination(shapeDestination.position);
                     obj = shapeDestination.gameObject;
-                    destinationSet = true;
+                    shapeDestinationSet = true;
                 }
                 checkDistanceToObject();
             }
@@ -75,6 +71,15 @@ public class RobotMovement : MonoBehaviour
         this.slotDestination = slotDestination;
         taskComplete = false;
     }
+
+    //use this to issue commands to the robot.
+    public void SetTask(int shapeIndex, Transform slotDestination)
+    {
+        this.SetShapeDestinationTransform(shapeIndex);
+        this.slotDestination = slotDestination;
+        taskComplete = false;
+    }
+
 
     //pickup code copied from player character and slghtly altered.
     void GrabObject(GameObject obj)
@@ -102,7 +107,7 @@ public class RobotMovement : MonoBehaviour
 
             heldObject = shapeObject.gameObject;
             pickedupShape = true;
-            destinationSet = false;
+            shapeDestinationSet = false;
         }
     }
 
@@ -117,6 +122,7 @@ public class RobotMovement : MonoBehaviour
         originalShapeParent = null;
         heldObject = null;
         pickedupShape = false;
+        shapeDestinationSet = false;
         taskComplete = true;
     }
 
@@ -161,12 +167,6 @@ public class RobotMovement : MonoBehaviour
         {
             shapeIndex = 0;
         }
-
         shapeDestination = roomObjects[shapeIndex].transform;
-    }
-
-    public void EnableMovement(bool enableMovement)
-    {
-        m_CanMove = enableMovement;
     }
 }

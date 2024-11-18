@@ -82,9 +82,7 @@ public class UISelection : MonoBehaviour
     private void SetRobotInAction()
     {
         RobotMovement robotScript = robots[m_CurrentRobotIndex];
-        robotScript.SetSlotDestinationTransform(slotTransforms[m_CurrentSlotIndex]);
-        robotScript.SetShapeDestinationTransform(m_CurrentObjectIndex);
-        robotScript.EnableMovement(true);
+        robotScript.SetTask(m_CurrentObjectIndex, slotTransforms[m_CurrentSlotIndex]);
     }
 
     #region Voice Controls Panel Part
