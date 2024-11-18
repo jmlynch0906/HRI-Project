@@ -69,10 +69,18 @@ public class RobotMovement : MonoBehaviour
         }
     }
 
-    //use this to issue commands to the robot.
+    // use this to issue commands to the robot.
     public void SetTask(Transform shapeDestination,Transform slotDestination){
         this.shapeDestination = shapeDestination;
         this.slotDestination = slotDestination;
+        taskComplete = false;
+    }
+
+    // use this to issue commands to the robot. Alternative that takes in shape index instead
+    public void SetTask(int shapeIndex, Transform slotDestination)
+    {
+        SetShapeDestinationTransform(shapeIndex);
+        SetSlotDestinationTransform(slotDestination);
         taskComplete = false;
     }
 
