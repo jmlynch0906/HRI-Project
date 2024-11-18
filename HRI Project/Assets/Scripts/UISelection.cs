@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 public class UISelection : MonoBehaviour
 {
@@ -242,9 +243,13 @@ public class UISelection : MonoBehaviour
                 {
                     if (parts[i] == "robot" && i + 1 < parts.Length)
                     {
-                        if (int.TryParse(parts[i + 1], out int robotIndex))
+                        if (int.TryParse(Regex.Replace(parts[i + 1], @"[^\d]+", ""), out int robotIndex))
                         {
                             m_CurrentRobotIndex = robotIndex - 1; // Convert to 0-based index
+                        }
+                        else
+                        {
+                            print("Failed to parse int from part: " + parts[i + 1]);
                         }
                     }
                 }
@@ -278,9 +283,13 @@ public class UISelection : MonoBehaviour
                 {
                     if (parts[i] == "slot" && i + 1 < parts.Length)
                     {
-                        if (int.TryParse(parts[i + 1], out int slotIndex))
+                        if (int.TryParse(Regex.Replace(parts[i + 1], @"[^\d]+", ""), out int slotIndex))
                         {
                             m_CurrentSlotIndex = slotIndex - 1; // Convert to 0-based index
+                        }
+                        else
+                        {
+                            print("Failed to parse int from part: " + parts[i + 1]);
                         }
                     }
                 }
