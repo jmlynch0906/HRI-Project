@@ -9,8 +9,6 @@ using System.Collections.Generic;
 
 public class UISelection : MonoBehaviour
 {
-    [SerializeField] private Toggle voiceControlToggle;
-
     [Space(8)]
     [SerializeField] private GameObject manualControlsPanel;
     [SerializeField] private GameObject voiceControlsPanel;
@@ -29,6 +27,10 @@ public class UISelection : MonoBehaviour
     [SerializeField] private RobotMovement[] robots;
     [SerializeField] private Transform[] slotTransforms;
 
+    [Space(8)]
+    [SerializeField] private Button resetBtn;
+    [SerializeField] private Experiment experimentToReset;
+
     private int m_CurrentRobotIndex = 0;
     private int m_CurrentSlotIndex = 0;
     private int m_CurrentObjectIndex = 0;
@@ -42,8 +44,6 @@ public class UISelection : MonoBehaviour
 
     private void OnEnable()
     {
-        voiceControlToggle.onValueChanged.AddListener(OnVoiceControlToggled);
-
         robotSelectionDropdown.onValueChanged.AddListener(OnRobotSelectionChanged);
         slotSelectionDropdown.onValueChanged.AddListener(OnSlotSelectionChanged);
         objectSelectionDropdown.onValueChanged.AddListener(OnObjectSelectionChanged);
@@ -56,12 +56,11 @@ public class UISelection : MonoBehaviour
     private void Start()
     {
         OnVoiceControlToggled(false);
+        resetBtn.onClick.AddListener(experimentToReset.resetObjects);
     }
 
     private void OnDisable()
     {
-        voiceControlToggle.onValueChanged.RemoveListener(OnVoiceControlToggled);
-
         robotSelectionDropdown.onValueChanged.RemoveListener(OnRobotSelectionChanged);
         slotSelectionDropdown.onValueChanged.RemoveListener(OnSlotSelectionChanged);
         objectSelectionDropdown.onValueChanged.RemoveListener(OnObjectSelectionChanged);
@@ -73,7 +72,7 @@ public class UISelection : MonoBehaviour
 
 
 
-    private void OnVoiceControlToggled(bool toggleValue)
+    public void OnVoiceControlToggled(bool toggleValue)
     {
         voiceControlsPanel.SetActive(toggleValue);
         manualControlsPanel.SetActive(!toggleValue);
@@ -94,6 +93,7 @@ public class UISelection : MonoBehaviour
         {
             voiceStatusText.text = "Recording...";
         }
+        print("start recording");
         startRecordingBtn.interactable = false;
         stopRecordingBtn.interactable = true;
 
@@ -103,6 +103,7 @@ public class UISelection : MonoBehaviour
 
     private void StopRecording()
     {
+        print("stop recording");
         try
         {
             if (voiceStatusText != null)
@@ -194,9 +195,6 @@ public class UISelection : MonoBehaviour
                             startRecordingBtn.interactable = true;
                             if (voiceStatusText != null)
                                 voiceStatusText.text = "Service unavailable. Please try manual control.";
-
-                            // Automatically switch to manual mode
-                            voiceControlToggle.isOn = false;
                         }
                     });
             }
@@ -208,9 +206,6 @@ public class UISelection : MonoBehaviour
                     startRecordingBtn.interactable = true;
                     if (voiceStatusText != null)
                         voiceStatusText.text = "Error processing voice. Please try manual control.";
-
-                    // Automatically switch to manual mode
-                    voiceControlToggle.isOn = false;
                 }
             }
 
@@ -355,10 +350,6 @@ public class UISelection : MonoBehaviour
         }
     }
 
-    public bool IsVoiceControlEnabled()
-    {
-        return voiceControlToggle.isOn;
-    }
 
 
     #endregion

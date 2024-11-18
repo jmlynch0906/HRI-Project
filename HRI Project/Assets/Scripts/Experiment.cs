@@ -12,6 +12,8 @@ public class Experiment : MonoBehaviour
     public Sequence currentSequence;
     public List<Sequence> completedSequences;
 
+    private bool voiceControlEnabled = false;
+
 
     public ExperimentObject[] room0;
     public ExperimentObject[] room1;
@@ -89,7 +91,7 @@ public class Experiment : MonoBehaviour
             running = false;
 
             // Get whether voice or manual controls were used
-            bool voiceControlEnabled = GameObject.Find("Canvas").GetComponent<UISelection>().IsVoiceControlEnabled();
+            bool voiceControlEnabled = false;
 
             // Write results to an output file
             string path = Application.dataPath + $"/results_{DateTime.Now.ToString("yy-MM-dd-HH-mm-ss")}.json";
@@ -112,6 +114,13 @@ public class Experiment : MonoBehaviour
             }
             sw.WriteLine("]}");
             sw.Close();
+
+            // Switch control type, reset sequences
+            voiceControlEnabled = !voiceControlEnabled;
+            GameObject.Find("Canvas").GetComponent<UISelection>().OnVoiceControlToggled(voiceControlEnabled);
+            completedSequences.Clear();
+            currentSequence = gameObject.AddComponent<Sequence>();
+            currentSequence.sequenceCompleteEvent += SequenceCompleteEvent;
         }
         else
         {
@@ -149,7 +158,7 @@ public class Experiment : MonoBehaviour
         return allObjects;
     }
 
-    private void resetObjects()
+    public void resetObjects()
     {
 
         foreach (ExperimentObject obj in allObjects)
