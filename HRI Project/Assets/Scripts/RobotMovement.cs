@@ -41,7 +41,10 @@ public class RobotMovement : MonoBehaviour
     {
         //robot returns home
         if(taskComplete){
-            agent.SetDestination(originalPosition);
+            if (agent.destination != originalPosition)
+            {
+                agent.SetDestination(originalPosition);
+            }
         }
         else{
             //robot moves to the slot
@@ -66,7 +69,9 @@ public class RobotMovement : MonoBehaviour
     }
 
     //use this to issue commands to the robot.
-    public void SetTask(Transform shapeDestination,Transform slotDestination){
+    public void SetTask(Transform shapeDestination,Transform slotDestination)
+    {
+        ResetState();
         this.shapeDestination = shapeDestination;
         this.slotDestination = slotDestination;
         taskComplete = false;
@@ -75,6 +80,7 @@ public class RobotMovement : MonoBehaviour
     //use this to issue commands to the robot.
     public void SetTask(int shapeIndex, Transform slotDestination)
     {
+        ResetState();
         this.SetShapeDestinationTransform(shapeIndex);
         this.slotDestination = slotDestination;
         taskComplete = false;
@@ -118,12 +124,7 @@ public class RobotMovement : MonoBehaviour
         objRB.constraints = RigidbodyConstraints.None;
         objRB.transform.parent = originalShapeParent;
         obj.GetComponent<ExperimentObject>().SetPosition(slotDestination);
-        obj = null;
-        originalShapeParent = null;
-        heldObject = null;
-        pickedupShape = false;
-        shapeDestinationSet = false;
-        taskComplete = true;
+        ResetState();
     }
 
     void MoveObject()
@@ -168,5 +169,18 @@ public class RobotMovement : MonoBehaviour
             shapeIndex = 0;
         }
         shapeDestination = roomObjects[shapeIndex].transform;
+    }
+
+    private void ResetState()
+    {
+        agent.ResetPath();
+        agent.SetDestination(originalPosition);
+        obj = null;
+        objRB = null;
+        originalShapeParent = null;
+        heldObject = null;
+        pickedupShape = false;
+        shapeDestinationSet = false;
+        taskComplete = true;
     }
 }
