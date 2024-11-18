@@ -16,8 +16,8 @@ public class RobotMovement : MonoBehaviour
     [SerializeField] private float distance;
     [SerializeField] private GameObject obj;
 
-    private Transform originalShapeParent;
-    private Rigidbody objRB;
+    [SerializeField] private Transform originalShapeParent;
+    [SerializeField] private Rigidbody objRB;
 
     [SerializeField] private bool pickedupShape = false;
     [SerializeField] private bool taskComplete = true;
@@ -77,7 +77,7 @@ public class RobotMovement : MonoBehaviour
     //use this to issue commands to the robot.
     public void SetTask(Transform shapeDestination,Transform slotDestination)
     {
-        ResetState();
+        DropObject();
         this.shapeDestination = shapeDestination;
         this.slotDestination = slotDestination;
         taskComplete = false;
@@ -86,7 +86,7 @@ public class RobotMovement : MonoBehaviour
     //use this to issue commands to the robot.
     public void SetTask(int shapeIndex, Transform slotDestination)
     {
-        ResetState();
+        DropObject();
         this.SetShapeDestinationTransform(shapeIndex);
         this.slotDestination = slotDestination;
         taskComplete = false;
@@ -112,10 +112,6 @@ public class RobotMovement : MonoBehaviour
 
             // Parent the object to the holdArea
             shapeObject.transform.SetParent(holdArea);
-  
-
-            obj.transform.localPosition = Vector3.zero; 
-            obj.transform.localRotation = Quaternion.identity; 
 
             heldObject = shapeObject.gameObject;
             pickedupShape = true;
@@ -125,11 +121,14 @@ public class RobotMovement : MonoBehaviour
 
     void DropObject()
     {
-        objRB.useGravity = true;
-        objRB.drag = 1;
-        objRB.constraints = RigidbodyConstraints.None;
-        objRB.transform.parent = originalShapeParent;
-        obj.GetComponent<ExperimentObject>().SetPosition(slotDestination);
+        if (objRB != null & obj != null)
+        {
+            objRB.useGravity = true;
+            objRB.drag = 1;
+            objRB.constraints = RigidbodyConstraints.None;
+            objRB.transform.parent = originalShapeParent;
+            obj.GetComponent<ExperimentObject>().SetPosition(slotDestination);
+        }
         ResetState();
     }
 
@@ -188,5 +187,8 @@ public class RobotMovement : MonoBehaviour
         pickedupShape = false;
         shapeDestinationSet = false;
         taskComplete = true;
+
+        shapeDestination = null;
+        slotDestination = null;
     }
 }
