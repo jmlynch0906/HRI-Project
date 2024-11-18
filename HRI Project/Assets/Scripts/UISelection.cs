@@ -82,7 +82,8 @@ public class UISelection : MonoBehaviour
     private void SetRobotInAction()
     {
         RobotMovement robotScript = robots[m_CurrentRobotIndex];
-        robotScript.SetTask(m_CurrentObjectIndex, slotTransforms[m_CurrentSlotIndex]);
+        robotScript.SetSlotDestinationTransform(slotTransforms[m_CurrentSlotIndex]);
+        robotScript.SetShapeDestinationTransform(m_CurrentObjectIndex);
         robotScript.EnableMovement(true);
     }
 
@@ -221,8 +222,6 @@ public class UISelection : MonoBehaviour
 
     private void ParseVoiceCommand(string command)
     {
-
-        print("parsing command");
         // Convert command to lowercase for easier parsing
         command = command.ToLower();
 

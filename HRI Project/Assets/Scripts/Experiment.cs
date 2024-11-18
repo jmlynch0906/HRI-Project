@@ -90,6 +90,9 @@ public class Experiment : MonoBehaviour
             // Complete the experiment after 15 sequences
             running = false;
 
+            // Get whether voice or manual controls were used
+            bool voiceControlEnabled = false;
+
             // Write results to an output file
             string path = Application.dataPath + $"/results_{DateTime.Now.ToString("yy-MM-dd-HH-mm-ss")}.json";
 
