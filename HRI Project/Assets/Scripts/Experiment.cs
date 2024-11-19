@@ -26,6 +26,8 @@ public class Experiment : MonoBehaviour
     [SerializeField] private Button startVoice;
     [SerializeField] private GameObject testCompletePopup;
 
+    private int experimentNum = 0;
+
 
     private Slot[] slots;
     // switched to awake to ensure that a sequence is added before other references to it are called.
@@ -58,6 +60,7 @@ public class Experiment : MonoBehaviour
 
         voiceControlEnabled = false;
         GameObject.Find("Canvas").GetComponent<UISelection>().OnVoiceControlToggled(voiceControlEnabled);
+        experimentNum = 0;
     }
 
     // Update is called once per frame
@@ -101,11 +104,12 @@ public class Experiment : MonoBehaviour
 
         if (completedSequences.Count() >= 5)
         {
-            // Complete the experiment after 15 sequences
+            // Complete the experiment after 5 sequences
             running = false;
+            experimentNum++;
 
             // Write results to an output file
-            string path = Application.dataPath + $"/results_{DateTime.Now.ToString("yy-MM-dd-HH-mm-ss")}.json";
+            string path = Application.dataPath + $"/results_{experimentNum}.json";
 
             print(path);
 
