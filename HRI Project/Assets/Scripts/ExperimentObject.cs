@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using Microsoft.Unity.VisualStudio.Editor;
+using TMPro;
+
+//using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 
 public class ExperimentObject : MonoBehaviour
@@ -17,6 +19,8 @@ public class ExperimentObject : MonoBehaviour
     public Material red;
     public Material green;
     public Material blue;
+
+   private TextMeshPro text;
 
     //variables for resetting the position
     
@@ -51,6 +55,8 @@ public class ExperimentObject : MonoBehaviour
      setAttributes();
 
      rb = GetComponentInChildren<Rigidbody>();
+     text = GetComponentInChildren<TextMeshPro>();
+     text.text = room;
     }
 
     // Update is called once per frame
@@ -98,9 +104,17 @@ public class ExperimentObject : MonoBehaviour
     }
 
     //assigns the attributes of this object to a tile
-    public void AssignToTile(int tilenum){
+    public void AssignToTile(int tilenum)
+    {
         Slot slot = GameObject.Find("Slot"+tilenum).transform.GetComponentInChildren<Slot>();
-        slot.setGoal(color,shape,room,image);
+        if (slot)
+        {
+            slot.setGoal(color,shape,room,image);
+        }
+        else
+        {
+            Debug.LogError($"Slot is Null For Tile Number : {tilenum}");
+        }
 
     }
 

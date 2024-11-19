@@ -13,7 +13,12 @@ public class Screen : MonoBehaviour
     }    
 
     //sets the image that'll appear on the screen
-    public void setImage(Texture image){
+    public void setImage(Texture image)
+    {
+        if (!material)
+        {
+            material = GetComponent<Renderer>().material;
+        }
         material.mainTexture = image;
     }
     //changes the background color of the screen. will change to green for correctness.

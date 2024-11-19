@@ -4,6 +4,7 @@ using System.Linq;
 using System.IO;
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Experiment : MonoBehaviour
 {
@@ -12,19 +13,26 @@ public class Experiment : MonoBehaviour
     public Sequence currentSequence;
     public List<Sequence> completedSequences;
 
-    
+    private bool voiceControlEnabled = false;
+
+
     public ExperimentObject[] room0;
     public ExperimentObject[] room1;
     public ExperimentObject[] room2;
     public ExperimentObject[] room3;
     public ExperimentObject[] allObjects;
 
-   
+    [SerializeField] private Button startManual;
+    [SerializeField] private Button startVoice;
+    [SerializeField] private GameObject testCompletePopup;
+
+    private int experimentNum = 0;
+
+
     private Slot[] slots;
     // switched to awake to ensure that a sequence is added before other references to it are called.
     void Awake()
     {
-        StartExperiment();
         //initializes arrays of objects to be used in the sequences. Since the sequence component has to run it more than once, it is more efficient to just have it ran once.
 
         Transform room0transform = GameObject.Find("Room0_Objects").transform;
@@ -32,25 +40,33 @@ public class Experiment : MonoBehaviour
         Transform room2transform = GameObject.Find("Room2_Objects").transform;
         Transform room3transform = GameObject.Find("Room3_Objects").transform;
         Transform slottransform = GameObject.Find("Slots").transform;
-        room0 = room0transform.GetComponentsInChildren<ExperimentObject>(); 
+        room0 = room0transform.GetComponentsInChildren<ExperimentObject>();
         Debug.Log("room0 array size: " + room0.Length);
-        room1  = room1transform.GetComponentsInChildren<ExperimentObject>();
-        Debug.Log ("room1 array size: " + room1.Length);
+        room1 = room1transform.GetComponentsInChildren<ExperimentObject>();
+        Debug.Log("room1 array size: " + room1.Length);
         room2 = room2transform.GetComponentsInChildren<ExperimentObject>();
         Debug.Log("room2 array size: " + room2.Length);
         room3 = room3transform.GetComponentsInChildren<ExperimentObject>();
-        Debug.Log("room3 array size: "+ room3.Length);
+        Debug.Log("room3 array size: " + room3.Length);
         slots = slottransform.GetComponentsInChildren<Slot>();
-        Debug.Log("slots array size"+ slots.Length);
+        Debug.Log("slots array size" + slots.Length);
         //concat all the arrays together to get all objects for use in the resetPositions method
         allObjects = room0.Concat(room1).Concat(room2).Concat(room3).ToArray();
 
+
+        startManual.transform.parent.parent.gameObject.SetActive(true);
+        startManual.onClick.AddListener(StartExperiment);
+        startVoice.onClick.AddListener(StartExperiment);
+
+        voiceControlEnabled = false;
+        GameObject.Find("Canvas").GetComponent<UISelection>().OnVoiceControlToggled(voiceControlEnabled);
+        experimentNum = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     // Starts the experiment and adds the first sequence
@@ -58,6 +74,9 @@ public class Experiment : MonoBehaviour
     {
         if (!running) // Only run through the start procedure if we haven't already started
         {
+            startManual.transform.parent.parent.gameObject.SetActive(false);
+            startVoice.transform.parent.parent.gameObject.SetActive(false);
+
             if (currentSequence != null)
             {
                 // There is still a prior sequence here. Unsubscribe from it and clear the previous list
@@ -83,24 +102,26 @@ public class Experiment : MonoBehaviour
         completedSequences.Add(currentSequence);
         currentSequence.sequenceCompleteEvent -= SequenceCompleteEvent;
 
-        if (completedSequences.Count() >= 15)
+        if (completedSequences.Count() >= 5)
         {
-            // Complete the experiment after 15 sequences
+            // Complete the experiment after 5 sequences
             running = false;
+            experimentNum++;
 
             // Write results to an output file
-            string path = Application.dataPath + $"/results_{DateTime.Now.ToString("yy-MM-dd-HH-mm-ss")}.json";
+            string path = Application.dataPath + $"/results_{experimentNum}.json";
 
             print(path);
 
             StreamWriter sw = File.CreateText(path);
             sw.WriteLine($"{{ \"experimentStartTime\": {experimentStartTime},");
+            sw.WriteLine($"\"voiceControlEnabled\": {voiceControlEnabled},");
             sw.WriteLine("\"sequences\": [");
             for (int i = 0; i < completedSequences.Count(); i++)
             {
                 Sequence seq = completedSequences[i];
                 string json = seq.Serialize();
-                if (i+1 != completedSequences.Count())
+                if (i + 1 != completedSequences.Count())
                 {
                     json += ",";
                 }
@@ -108,6 +129,22 @@ public class Experiment : MonoBehaviour
             }
             sw.WriteLine("]}");
             sw.Close();
+
+            // Switch control type, reset sequences
+            voiceControlEnabled = !voiceControlEnabled;
+            GameObject.Find("Canvas").GetComponent<UISelection>().OnVoiceControlToggled(voiceControlEnabled);
+            completedSequences.Clear();
+            currentSequence = gameObject.AddComponent<Sequence>();
+            currentSequence.sequenceCompleteEvent += SequenceCompleteEvent;
+
+            if (voiceControlEnabled)
+            {
+                startVoice.transform.parent.parent.gameObject.SetActive(true);
+            }
+            else
+            {
+                testCompletePopup.SetActive(true);
+            }
         }
         else
         {
@@ -119,27 +156,37 @@ public class Experiment : MonoBehaviour
     }
 
     //getters for the arrays
-    public ExperimentObject[] GetRoom(int roomnum){
-        switch(roomnum){
+    public ExperimentObject[] GetRoom(int roomnum)
+    {
+        switch (roomnum)
+        {
             case 0:
                 return room0;
             case 1:
                 return room1;
             case 2:
                 return room2;
-            case 3: 
+            case 3:
                 return room3;
             default:
                 return null;
         }
     }
-    public Slot[] GetSlots(){
+    public Slot[] GetSlots()
+    {
         return slots;
     }
 
-    private void resetObjects(){
+    public ExperimentObject[] GetAllObjects()
+    {
+        return allObjects;
+    }
 
-        foreach (ExperimentObject obj in allObjects){
+    public void resetObjects()
+    {
+
+        foreach (ExperimentObject obj in allObjects)
+        {
             obj.SetPosition(null);
         }
     }
