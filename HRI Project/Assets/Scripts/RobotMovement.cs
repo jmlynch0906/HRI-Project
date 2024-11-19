@@ -127,7 +127,9 @@ public class RobotMovement : MonoBehaviour
             objRB.drag = 1;
             objRB.constraints = RigidbodyConstraints.None;
             objRB.transform.parent = originalShapeParent;
-            obj.GetComponent<ExperimentObject>().SetPosition(slotDestination);
+            if (Vector3.Distance(transform.position, slotDestination.position) <= 3.0f) {
+                obj.GetComponent<ExperimentObject>().SetPosition(slotDestination);
+            }
         }
         ResetState();
     }
