@@ -8851,6 +8851,10 @@ PrefabInstance:
       propertyPath: m_Radius
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 9063264815188422034, guid: e7df3493adc9f6148bcba1cdbbda0139, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
     - target: {fileID: 9208779487027245720, guid: e7df3493adc9f6148bcba1cdbbda0139, type: 3}
       propertyPath: m_LocalPosition.x
       value: 40.55703
@@ -11170,6 +11174,10 @@ PrefabInstance:
     - target: {fileID: 8672434975470517752, guid: e7df3493adc9f6148bcba1cdbbda0139, type: 3}
       propertyPath: m_Radius
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9063264815188422034, guid: e7df3493adc9f6148bcba1cdbbda0139, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 256
       objectReference: {fileID: 0}
     - target: {fileID: 9208779487027245720, guid: e7df3493adc9f6148bcba1cdbbda0139, type: 3}
       propertyPath: m_LocalPosition.x
@@ -15971,6 +15979,10 @@ PrefabInstance:
     - target: {fileID: 8672434975470517752, guid: e7df3493adc9f6148bcba1cdbbda0139, type: 3}
       propertyPath: m_Radius
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9063264815188422034, guid: e7df3493adc9f6148bcba1cdbbda0139, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 256
       objectReference: {fileID: 0}
     - target: {fileID: 9208779487027245720, guid: e7df3493adc9f6148bcba1cdbbda0139, type: 3}
       propertyPath: m_LocalPosition.x
