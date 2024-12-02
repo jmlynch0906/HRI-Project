@@ -45,10 +45,11 @@ This project compares the efficiency of voice commands versus mechanical control
 | Reset if needed| Reset if needed| Reset if needed| 
 
 ## Team
-- Unity Development: Jack Lynch
-- Voice Processing: Neel Bahadarpurkar, Harshal Bhat
-- User Interface: Paul Raynes
-- Experiment Design: Brendan Byrne
+- Neel Girish Bahadarpurkar
+- Harshal Suresh Bhat
+- Brendan Byrne
+- Jack Lynch
+- Paul Raynes
 
 ---
 Project developed at Worcester Polytechnic Institute
